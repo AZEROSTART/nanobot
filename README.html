@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x1f4e2; News</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <div align="center">
+  <img src="file:////Users/aatang/opensc/nanobot/nanobot_logo.png" alt="nanobot" width="500">
+  <h1>nanobot: Ultra-Lightweight Personal AI Assistant</h1>
+  <p>
+    <a href="https://pypi.org/project/nanobot-ai/"><img src="https://img.shields.io/pypi/v/nanobot-ai" alt="PyPI"></a>
+    <a href="https://pepy.tech/project/nanobot-ai"><img src="https://static.pepy.tech/badge/nanobot-ai" alt="Downloads"></a>
+    <img src="https://img.shields.io/badge/python-≥3.11-blue" alt="Python">
+    <img src="https://img.shields.io/badge/license-MIT-green" alt="License">
+    <a href="./COMMUNICATION.html"><img src="https://img.shields.io/badge/Feishu-Group-E9DBFC?style=flat&logo=feishu&logoColor=white" alt="Feishu"></a>
+    <a href="./COMMUNICATION.html"><img src="https://img.shields.io/badge/WeChat-Group-C5EAB4?style=flat&logo=wechat&logoColor=white" alt="WeChat"></a>
+    <a href="https://discord.gg/MnCvHqpUGB"><img src="https://img.shields.io/badge/Discord-Community-5865F2?style=flat&logo=discord&logoColor=white" alt="Discord"></a>
+  </p>
+</div>
+git@github.com:AZEROSTART/nanobot.git
+🐈 **nanobot** is an **ultra-lightweight** personal AI assistant inspired by [OpenClaw](https://github.com/openclaw/openclaw) 
+<p>⚡️ Delivers core agent functionality in just <strong>~4,000</strong> lines of code — <strong>99% smaller</strong> than Clawdbot's 430k+ lines.</p>
+<p>📏 Real-time line count: <strong>3,935 lines</strong> (run <code>bash core_agent_lines.sh</code> to verify anytime)</p>
+<h2 id="-news">📢 News</h2>
+<ul>
+<li><strong>2026-02-28</strong> 🚀 Released <strong>v0.1.4.post3</strong> — cleaner context, hardened session history, and smarter agent. Please see <a href="https://github.com/HKUDS/nanobot/releases/tag/v0.1.4.post3">release notes</a> for details.</li>
+<li><strong>2026-02-27</strong> 🧠 Experimental thinking mode support, DingTalk media messages, Feishu and QQ channel fixes.</li>
+<li><strong>2026-02-26</strong> 🛡️ Session poisoning fix, WhatsApp dedup, Windows path guard, Mistral compatibility.</li>
+<li><strong>2026-02-25</strong> 🧹 New Matrix channel, cleaner session context, auto workspace template sync.</li>
+<li><strong>2026-02-24</strong> 🚀 Released <strong>v0.1.4.post2</strong> — a reliability-focused release with a redesigned heartbeat, prompt cache optimization, and hardened provider &amp; channel stability. See <a href="https://github.com/HKUDS/nanobot/releases/tag/v0.1.4.post2">release notes</a> for details.</li>
+<li><strong>2026-02-23</strong> 🔧 Virtual tool-call heartbeat, prompt cache optimization, Slack mrkdwn fixes.</li>
+<li><strong>2026-02-22</strong> 🛡️ Slack thread isolation, Discord typing fix, agent reliability improvements.</li>
+<li><strong>2026-02-21</strong> 🎉 Released <strong>v0.1.4.post1</strong> — new providers, media support across channels, and major stability improvements. See <a href="https://github.com/HKUDS/nanobot/releases/tag/v0.1.4.post1">release notes</a> for details.</li>
+<li><strong>2026-02-20</strong> 🐦 Feishu now receives multimodal files from users. More reliable memory under the hood.</li>
+<li><strong>2026-02-19</strong> ✨ Slack now sends files, Discord splits long messages, and subagents work in CLI mode.</li>
+</ul>
+<details>
+<summary>Earlier news</summary>
+<ul>
+<li><strong>2026-02-18</strong> ⚡️ nanobot now supports VolcEngine, MCP custom auth headers, and Anthropic prompt caching.</li>
+<li><strong>2026-02-17</strong> 🎉 Released <strong>v0.1.4</strong> — MCP support, progress streaming, new providers, and multiple channel improvements. Please see <a href="https://github.com/HKUDS/nanobot/releases/tag/v0.1.4">release notes</a> for details.</li>
+<li><strong>2026-02-16</strong> 🦞 nanobot now integrates a <a href="https://clawhub.ai">ClawHub</a> skill — search and install public agent skills.</li>
+<li><strong>2026-02-15</strong> 🔑 nanobot now supports OpenAI Codex provider with OAuth login support.</li>
+<li><strong>2026-02-14</strong> 🔌 nanobot now supports MCP! See <a href="#mcp-model-context-protocol">MCP section</a> for details.</li>
+<li><strong>2026-02-13</strong> 🎉 Released <strong>v0.1.3.post7</strong> — includes security hardening and multiple improvements. <strong>Please upgrade to the latest version to address security issues</strong>. See <a href="https://github.com/HKUDS/nanobot/releases/tag/v0.1.3.post7">release notes</a> for more details.</li>
+<li><strong>2026-02-12</strong> 🧠 Redesigned memory system — Less code, more reliable. Join the <a href="https://github.com/HKUDS/nanobot/discussions/566">discussion</a> about it!</li>
+<li><strong>2026-02-11</strong> ✨ Enhanced CLI experience and added MiniMax support!</li>
+<li><strong>2026-02-10</strong> 🎉 Released <strong>v0.1.3.post6</strong> with improvements! Check the updates <a href="https://github.com/HKUDS/nanobot/releases/tag/v0.1.3.post6">notes</a> and our <a href="https://github.com/HKUDS/nanobot/discussions/431">roadmap</a>.</li>
+<li><strong>2026-02-09</strong> 💬 Added Slack, Email, and QQ support — nanobot now supports multiple chat platforms!</li>
+<li><strong>2026-02-08</strong> 🔧 Refactored Providers—adding a new LLM provider now takes just 2 simple steps! Check <a href="#providers">here</a>.</li>
+<li><strong>2026-02-07</strong> 🚀 Released <strong>v0.1.3.post5</strong> with Qwen support &amp; several key improvements! Check <a href="https://github.com/HKUDS/nanobot/releases/tag/v0.1.3.post5">here</a> for details.</li>
+<li><strong>2026-02-06</strong> ✨ Added Moonshot/Kimi provider, Discord integration, and enhanced security hardening!</li>
+<li><strong>2026-02-05</strong> ✨ Added Feishu channel, DeepSeek provider, and enhanced scheduled tasks support!</li>
+<li><strong>2026-02-04</strong> 🚀 Released <strong>v0.1.3.post4</strong> with multi-provider &amp; Docker support! Check <a href="https://github.com/HKUDS/nanobot/releases/tag/v0.1.3.post4">here</a> for details.</li>
+<li><strong>2026-02-03</strong> ⚡ Integrated vLLM for local LLM support and improved natural language task scheduling!</li>
+<li><strong>2026-02-02</strong> 🎉 nanobot officially launched! Welcome to try 🐈 nanobot!</li>
+</ul>
+</details>
+<h2 id="key-features-of-nanobot">Key Features of nanobot:</h2>
+<p>🪶 <strong>Ultra-Lightweight</strong>: Just ~4,000 lines of core agent code — 99% smaller than Clawdbot.</p>
+<p>🔬 <strong>Research-Ready</strong>: Clean, readable code that's easy to understand, modify, and extend for research.</p>
+<p>⚡️ <strong>Lightning Fast</strong>: Minimal footprint means faster startup, lower resource usage, and quicker iterations.</p>
+<p>💎 <strong>Easy-to-Use</strong>: One-click to deploy and you're ready to go.</p>
+<h2 id="️-architecture">🏗️ Architecture</h2>
+<p align="center">
+  <img src="file:////Users/aatang/opensc/nanobot/nanobot_arch.png" alt="nanobot architecture" width="800">
+</p>
+<h2 id="-features">✨ Features</h2>
+<table align="center">
+  <tr align="center">
+    <th><p align="center">📈 24/7 Real-Time Market Analysis</p></th>
+    <th><p align="center">🚀 Full-Stack Software Engineer</p></th>
+    <th><p align="center">📅 Smart Daily Routine Manager</p></th>
+    <th><p align="center">📚 Personal Knowledge Assistant</p></th>
+  </tr>
+  <tr>
+    <td align="center"><p align="center"><img src="file:////Users/aatang/opensc/nanobot/case/search.gif" width="180" height="400"></p></td>
+    <td align="center"><p align="center"><img src="file:////Users/aatang/opensc/nanobot/case/code.gif" width="180" height="400"></p></td>
+    <td align="center"><p align="center"><img src="file:////Users/aatang/opensc/nanobot/case/scedule.gif" width="180" height="400"></p></td>
+    <td align="center"><p align="center"><img src="file:////Users/aatang/opensc/nanobot/case/memory.gif" width="180" height="400"></p></td>
+  </tr>
+  <tr>
+    <td align="center">Discovery • Insights • Trends</td>
+    <td align="center">Develop • Deploy • Scale</td>
+    <td align="center">Schedule • Automate • Organize</td>
+    <td align="center">Learn • Memory • Reasoning</td>
+  </tr>
+</table>
+<h2 id="-install">📦 Install</h2>
+<p><strong>Install from source</strong> (latest features, recommended for development)</p>
+<pre><code class="language-bash">git <span class="hljs-built_in">clone</span> https://github.com/HKUDS/nanobot.git
+<span class="hljs-built_in">cd</span> nanobot
+pip install -e .
+</code></pre>
+<p><strong>Install with <a href="https://github.com/astral-sh/uv">uv</a></strong> (stable, fast)</p>
+<pre><code class="language-bash">uv tool install nanobot-ai
+</code></pre>
+<p><strong>Install from PyPI</strong> (stable)</p>
+<pre><code class="language-bash">pip install nanobot-ai
+</code></pre>
+<h2 id="-quick-start">🚀 Quick Start</h2>
+<div class="markdown-alert markdown-alert-tip"><p class="markdown-alert-title"><svg class="octicon octicon-light-bulb mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863 0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM6 15.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"></path></svg>Tip</p><p>Set your API key in <code>~/.nanobot/config.json</code>.
+Get API keys: <a href="https://openrouter.ai/keys">OpenRouter</a> (Global) · <a href="https://brave.com/search/api/">Brave Search</a> (optional, for web search)</p>
+</div>
+<p><strong>1. Initialize</strong></p>
+<pre><code class="language-bash">nanobot onboard
+</code></pre>
+<p><strong>2. Configure</strong> (<code>~/.nanobot/config.json</code>)</p>
+<p>Add or merge these <strong>two parts</strong> into your config (other options have defaults).</p>
+<p><em>Set your API key</em> (e.g. OpenRouter, recommended for global users):</p>
+<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;providers&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;openrouter&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;apiKey&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;sk-or-v1-xxx&quot;</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<p><em>Set your model</em> (optionally pin a provider — defaults to auto-detection):</p>
+<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;agents&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;defaults&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;model&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;anthropic/claude-opus-4-5&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;provider&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;openrouter&quot;</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<p><strong>3. Chat</strong></p>
+<pre><code class="language-bash">nanobot agent
+</code></pre>
+<p>That's it! You have a working AI assistant in 2 minutes.</p>
+<h2 id="-chat-apps">💬 Chat Apps</h2>
+<p>Connect nanobot to your favorite chat platform.</p>
+<table>
+<thead>
+<tr>
+<th>Channel</th>
+<th>What you need</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Telegram</strong></td>
+<td>Bot token from @BotFather</td>
+</tr>
+<tr>
+<td><strong>Discord</strong></td>
+<td>Bot token + Message Content intent</td>
+</tr>
+<tr>
+<td><strong>WhatsApp</strong></td>
+<td>QR code scan</td>
+</tr>
+<tr>
+<td><strong>Feishu</strong></td>
+<td>App ID + App Secret</td>
+</tr>
+<tr>
+<td><strong>Mochat</strong></td>
+<td>Claw token (auto-setup available)</td>
+</tr>
+<tr>
+<td><strong>DingTalk</strong></td>
+<td>App Key + App Secret</td>
+</tr>
+<tr>
+<td><strong>Slack</strong></td>
+<td>Bot token + App-Level token</td>
+</tr>
+<tr>
+<td><strong>Email</strong></td>
+<td>IMAP/SMTP credentials</td>
+</tr>
+<tr>
+<td><strong>QQ</strong></td>
+<td>App ID + App Secret</td>
+</tr>
+</tbody>
+</table>
+<details>
+<summary><b>Telegram</b> (Recommended)</summary>
+<p><strong>1. Create a bot</strong></p>
+<ul>
+<li>Open Telegram, search <code>@BotFather</code></li>
+<li>Send <code>/newbot</code>, follow prompts</li>
+<li>Copy the token</li>
+</ul>
+<p><strong>2. Configure</strong></p>
+<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;channels&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;telegram&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;enabled&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">true</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;token&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;YOUR_BOT_TOKEN&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;allowFrom&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;YOUR_USER_ID&quot;</span><span class="hljs-punctuation">]</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<blockquote>
+<p>You can find your <strong>User ID</strong> in Telegram settings. It is shown as <code>@yourUserId</code>.
+Copy this value <strong>without the <code>@</code> symbol</strong> and paste it into the config file.</p>
+</blockquote>
+<p><strong>3. Run</strong></p>
+<pre><code class="language-bash">nanobot gateway
+</code></pre>
+</details>
+<details>
+<summary><b>Mochat (Claw IM)</b></summary>
+<p>Uses <strong><a href="http://Socket.IO">Socket.IO</a> WebSocket</strong> by default, with HTTP polling fallback.</p>
+<p><strong>1. Ask nanobot to set up Mochat for you</strong></p>
+<p>Simply send this message to nanobot (replace <code>xxx@xxx</code> with your real email):</p>
+<pre><code>Read https://raw.githubusercontent.com/HKUDS/MoChat/refs/heads/main/skills/nanobot/skill.md and register on MoChat. My Email account is xxx@xxx Bind me as your owner and DM me on MoChat.
+</code></pre>
+<p>nanobot will automatically register, configure <code>~/.nanobot/config.json</code>, and connect to Mochat.</p>
+<p><strong>2. Restart gateway</strong></p>
+<pre><code class="language-bash">nanobot gateway
+</code></pre>
+<p>That's it — nanobot handles the rest!</p>
+<br>
+<details>
+<summary>Manual configuration (advanced)</summary>
+<p>If you prefer to configure manually, add the following to <code>~/.nanobot/config.json</code>:</p>
+<blockquote>
+<p>Keep <code>claw_token</code> private. It should only be sent in <code>X-Claw-Token</code> header to your Mochat API endpoint.</p>
+</blockquote>
+<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;channels&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;mochat&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;enabled&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">true</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;base_url&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;https://mochat.io&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;socket_url&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;https://mochat.io&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;socket_path&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;/socket.io&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;claw_token&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;claw_xxx&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;agent_user_id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;6982abcdef&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;sessions&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;*&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;panels&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;*&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;reply_delay_mode&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;non-mention&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;reply_delay_ms&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">120000</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+</details>
+</details>
+<details>
+<summary><b>Discord</b></summary>
+<p><strong>1. Create a bot</strong></p>
+<ul>
+<li>Go to <a href="https://discord.com/developers/applications">https://discord.com/developers/applications</a></li>
+<li>Create an application → Bot → Add Bot</li>
+<li>Copy the bot token</li>
+</ul>
+<p><strong>2. Enable intents</strong></p>
+<ul>
+<li>In the Bot settings, enable <strong>MESSAGE CONTENT INTENT</strong></li>
+<li>(Optional) Enable <strong>SERVER MEMBERS INTENT</strong> if you plan to use allow lists based on member data</li>
+</ul>
+<p><strong>3. Get your User ID</strong></p>
+<ul>
+<li>Discord Settings → Advanced → enable <strong>Developer Mode</strong></li>
+<li>Right-click your avatar → <strong>Copy User ID</strong></li>
+</ul>
+<p><strong>4. Configure</strong></p>
+<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;channels&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;discord&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;enabled&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">true</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;token&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;YOUR_BOT_TOKEN&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;allowFrom&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;YOUR_USER_ID&quot;</span><span class="hljs-punctuation">]</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<p><strong>5. Invite the bot</strong></p>
+<ul>
+<li>OAuth2 → URL Generator</li>
+<li>Scopes: <code>bot</code></li>
+<li>Bot Permissions: <code>Send Messages</code>, <code>Read Message History</code></li>
+<li>Open the generated invite URL and add the bot to your server</li>
+</ul>
+<p><strong>6. Run</strong></p>
+<pre><code class="language-bash">nanobot gateway
+</code></pre>
+</details>
+<details>
+<summary><b>Matrix (Element)</b></summary>
+<p>Install Matrix dependencies first:</p>
+<pre><code class="language-bash">pip install nanobot-ai[matrix]
+</code></pre>
+<p><strong>1. Create/choose a Matrix account</strong></p>
+<ul>
+<li>Create or reuse a Matrix account on your homeserver (for example <code>matrix.org</code>).</li>
+<li>Confirm you can log in with Element.</li>
+</ul>
+<p><strong>2. Get credentials</strong></p>
+<ul>
+<li>You need:
+<ul>
+<li><code>userId</code> (example: <code>@nanobot:matrix.org</code>)</li>
+<li><code>accessToken</code></li>
+<li><code>deviceId</code> (recommended so sync tokens can be restored across restarts)</li>
+</ul>
+</li>
+<li>You can obtain these from your homeserver login API (<code>/_matrix/client/v3/login</code>) or from your client's advanced session settings.</li>
+</ul>
+<p><strong>3. Configure</strong></p>
+<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;channels&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;matrix&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;enabled&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">true</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;homeserver&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;https://matrix.org&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;userId&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;@nanobot:matrix.org&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;accessToken&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;syt_xxx&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;deviceId&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;NANOBOT01&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;e2eeEnabled&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">true</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;allowFrom&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;@your_user:matrix.org&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;groupPolicy&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;open&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;groupAllowFrom&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;allowRoomMentions&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">false</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;maxMediaBytes&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">20971520</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<blockquote>
+<p>Keep a persistent <code>matrix-store</code> and stable <code>deviceId</code> — encrypted session state is lost if these change across restarts.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>allowFrom</code></td>
+<td>User IDs allowed to interact. Empty = all senders.</td>
+</tr>
+<tr>
+<td><code>groupPolicy</code></td>
+<td><code>open</code> (default), <code>mention</code>, or <code>allowlist</code>.</td>
+</tr>
+<tr>
+<td><code>groupAllowFrom</code></td>
+<td>Room allowlist (used when policy is <code>allowlist</code>).</td>
+</tr>
+<tr>
+<td><code>allowRoomMentions</code></td>
+<td>Accept <code>@room</code> mentions in mention mode.</td>
+</tr>
+<tr>
+<td><code>e2eeEnabled</code></td>
+<td>E2EE support (default <code>true</code>). Set <code>false</code> for plaintext-only.</td>
+</tr>
+<tr>
+<td><code>maxMediaBytes</code></td>
+<td>Max attachment size (default <code>20MB</code>). Set <code>0</code> to block all media.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>4. Run</strong></p>
+<pre><code class="language-bash">nanobot gateway
+</code></pre>
+</details>
+<details>
+<summary><b>WhatsApp</b></summary>
+<p>Requires <strong>Node.js ≥18</strong>.</p>
+<p><strong>1. Link device</strong></p>
+<pre><code class="language-bash">nanobot channels login
+<span class="hljs-comment"># Scan QR with WhatsApp → Settings → Linked Devices</span>
+</code></pre>
+<p><strong>2. Configure</strong></p>
+<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;channels&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;whatsapp&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;enabled&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">true</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;allowFrom&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;+1234567890&quot;</span><span class="hljs-punctuation">]</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<p><strong>3. Run</strong> (two terminals)</p>
+<pre><code class="language-bash"><span class="hljs-comment"># Terminal 1</span>
+nanobot channels login
+
+<span class="hljs-comment"># Terminal 2</span>
+nanobot gateway
+</code></pre>
+</details>
+<details>
+<summary><b>Feishu (飞书)</b></summary>
+<p>Uses <strong>WebSocket</strong> long connection — no public IP required.</p>
+<p><strong>1. Create a Feishu bot</strong></p>
+<ul>
+<li>Visit <a href="https://open.feishu.cn/app">Feishu Open Platform</a></li>
+<li>Create a new app → Enable <strong>Bot</strong> capability</li>
+<li><strong>Permissions</strong>: Add <code>im:message</code> (send messages) and <code>im:message.p2p_msg:readonly</code> (receive messages)</li>
+<li><strong>Events</strong>: Add <code>im.message.receive_v1</code> (receive messages)
+<ul>
+<li>Select <strong>Long Connection</strong> mode (requires running nanobot first to establish connection)</li>
+</ul>
+</li>
+<li>Get <strong>App ID</strong> and <strong>App Secret</strong> from &quot;Credentials &amp; Basic Info&quot;</li>
+<li>Publish the app</li>
+</ul>
+<p><strong>2. Configure</strong></p>
+<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;channels&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;feishu&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;enabled&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">true</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;appId&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;cli_xxx&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;appSecret&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;xxx&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;encryptKey&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;verificationToken&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;allowFrom&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;ou_YOUR_OPEN_ID&quot;</span><span class="hljs-punctuation">]</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<blockquote>
+<p><code>encryptKey</code> and <code>verificationToken</code> are optional for Long Connection mode.
+<code>allowFrom</code>: Add your open_id (find it in nanobot logs when you message the bot). Use <code>[&quot;*&quot;]</code> to allow all users.</p>
+</blockquote>
+<p><strong>3. Run</strong></p>
+<pre><code class="language-bash">nanobot gateway
+</code></pre>
+<div class="markdown-alert markdown-alert-tip"><p class="markdown-alert-title"><svg class="octicon octicon-light-bulb mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863 0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM6 15.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"></path></svg>Tip</p><p>Feishu uses WebSocket to receive messages — no webhook or public IP needed!</p>
+</div>
+</details>
+<details>
+<summary><b>QQ (QQ单聊)</b></summary>
+<p>Uses <strong>botpy SDK</strong> with WebSocket — no public IP required. Currently supports <strong>private messages only</strong>.</p>
+<p><strong>1. Register &amp; create bot</strong></p>
+<ul>
+<li>Visit <a href="https://q.qq.com">QQ Open Platform</a> → Register as a developer (personal or enterprise)</li>
+<li>Create a new bot application</li>
+<li>Go to <strong>开发设置 (Developer Settings)</strong> → copy <strong>AppID</strong> and <strong>AppSecret</strong></li>
+</ul>
+<p><strong>2. Set up sandbox for testing</strong></p>
+<ul>
+<li>In the bot management console, find <strong>沙箱配置 (Sandbox Config)</strong></li>
+<li>Under <strong>在消息列表配置</strong>, click <strong>添加成员</strong> and add your own QQ number</li>
+<li>Once added, scan the bot's QR code with mobile QQ → open the bot profile → tap &quot;发消息&quot; to start chatting</li>
+</ul>
+<p><strong>3. Configure</strong></p>
+<blockquote>
+<ul>
+<li><code>allowFrom</code>: Add your openid (find it in nanobot logs when you message the bot). Use <code>[&quot;*&quot;]</code> for public access.</li>
+<li>For production: submit a review in the bot console and publish. See <a href="https://bot.q.qq.com/wiki/">QQ Bot Docs</a> for the full publishing flow.</li>
+</ul>
+</blockquote>
+<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;channels&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;qq&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;enabled&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">true</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;appId&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;YOUR_APP_ID&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;secret&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;YOUR_APP_SECRET&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;allowFrom&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;YOUR_OPENID&quot;</span><span class="hljs-punctuation">]</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<p><strong>4. Run</strong></p>
+<pre><code class="language-bash">nanobot gateway
+</code></pre>
+<p>Now send a message to the bot from QQ — it should respond!</p>
+</details>
+<details>
+<summary><b>DingTalk (钉钉)</b></summary>
+<p>Uses <strong>Stream Mode</strong> — no public IP required.</p>
+<p><strong>1. Create a DingTalk bot</strong></p>
+<ul>
+<li>Visit <a href="https://open-dev.dingtalk.com/">DingTalk Open Platform</a></li>
+<li>Create a new app -&gt; Add <strong>Robot</strong> capability</li>
+<li><strong>Configuration</strong>:
+<ul>
+<li>Toggle <strong>Stream Mode</strong> ON</li>
+</ul>
+</li>
+<li><strong>Permissions</strong>: Add necessary permissions for sending messages</li>
+<li>Get <strong>AppKey</strong> (Client ID) and <strong>AppSecret</strong> (Client Secret) from &quot;Credentials&quot;</li>
+<li>Publish the app</li>
+</ul>
+<p><strong>2. Configure</strong></p>
+<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;channels&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;dingtalk&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;enabled&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">true</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;clientId&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;YOUR_APP_KEY&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;clientSecret&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;YOUR_APP_SECRET&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;allowFrom&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;YOUR_STAFF_ID&quot;</span><span class="hljs-punctuation">]</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<blockquote>
+<p><code>allowFrom</code>: Add your staff ID. Use <code>[&quot;*&quot;]</code> to allow all users.</p>
+</blockquote>
+<p><strong>3. Run</strong></p>
+<pre><code class="language-bash">nanobot gateway
+</code></pre>
+</details>
+<details>
+<summary><b>Slack</b></summary>
+<p>Uses <strong>Socket Mode</strong> — no public URL required.</p>
+<p><strong>1. Create a Slack app</strong></p>
+<ul>
+<li>Go to <a href="https://api.slack.com/apps">Slack API</a> → <strong>Create New App</strong> → &quot;From scratch&quot;</li>
+<li>Pick a name and select your workspace</li>
+</ul>
+<p><strong>2. Configure the app</strong></p>
+<ul>
+<li><strong>Socket Mode</strong>: Toggle ON → Generate an <strong>App-Level Token</strong> with <code>connections:write</code> scope → copy it (<code>xapp-...</code>)</li>
+<li><strong>OAuth &amp; Permissions</strong>: Add bot scopes: <code>chat:write</code>, <code>reactions:write</code>, <code>app_mentions:read</code></li>
+<li><strong>Event Subscriptions</strong>: Toggle ON → Subscribe to bot events: <code>message.im</code>, <code>message.channels</code>, <code>app_mention</code> → Save Changes</li>
+<li><strong>App Home</strong>: Scroll to <strong>Show Tabs</strong> → Enable <strong>Messages Tab</strong> → Check <strong>&quot;Allow users to send Slash commands and messages from the messages tab&quot;</strong></li>
+<li><strong>Install App</strong>: Click <strong>Install to Workspace</strong> → Authorize → copy the <strong>Bot Token</strong> (<code>xoxb-...</code>)</li>
+</ul>
+<p><strong>3. Configure nanobot</strong></p>
+<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;channels&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;slack&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;enabled&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">true</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;botToken&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;xoxb-...&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;appToken&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;xapp-...&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;allowFrom&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;YOUR_SLACK_USER_ID&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;groupPolicy&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;mention&quot;</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<p><strong>4. Run</strong></p>
+<pre><code class="language-bash">nanobot gateway
+</code></pre>
+<p>DM the bot directly or @mention it in a channel — it should respond!</p>
+<div class="markdown-alert markdown-alert-tip"><p class="markdown-alert-title"><svg class="octicon octicon-light-bulb mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863 0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM6 15.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"></path></svg>Tip</p><p></p>
+<ul>
+<li><code>groupPolicy</code>: <code>&quot;mention&quot;</code> (default — respond only when @mentioned), <code>&quot;open&quot;</code> (respond to all channel messages), or <code>&quot;allowlist&quot;</code> (restrict to specific channels).</li>
+<li>DM policy defaults to open. Set <code>&quot;dm&quot;: {&quot;enabled&quot;: false}</code> to disable DMs.</li>
+</ul>
+</div>
+</details>
+<details>
+<summary><b>Email</b></summary>
+<p>Give nanobot its own email account. It polls <strong>IMAP</strong> for incoming mail and replies via <strong>SMTP</strong> — like a personal email assistant.</p>
+<p><strong>1. Get credentials (Gmail example)</strong></p>
+<ul>
+<li>Create a dedicated Gmail account for your bot (e.g. <code>my-nanobot@gmail.com</code>)</li>
+<li>Enable 2-Step Verification → Create an <a href="https://myaccount.google.com/apppasswords">App Password</a></li>
+<li>Use this app password for both IMAP and SMTP</li>
+</ul>
+<p><strong>2. Configure</strong></p>
+<blockquote>
+<ul>
+<li><code>consentGranted</code> must be <code>true</code> to allow mailbox access. This is a safety gate — set <code>false</code> to fully disable.</li>
+<li><code>allowFrom</code>: Add your email address. Use <code>[&quot;*&quot;]</code> to accept emails from anyone.</li>
+<li><code>smtpUseTls</code> and <code>smtpUseSsl</code> default to <code>true</code> / <code>false</code> respectively, which is correct for Gmail (port 587 + STARTTLS). No need to set them explicitly.</li>
+<li>Set <code>&quot;autoReplyEnabled&quot;: false</code> if you only want to read/analyze emails without sending automatic replies.</li>
+</ul>
+</blockquote>
+<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;channels&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;email&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;enabled&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">true</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;consentGranted&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">true</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;imapHost&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;imap.gmail.com&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;imapPort&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">993</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;imapUsername&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;my-nanobot@gmail.com&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;imapPassword&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;your-app-password&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;smtpHost&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;smtp.gmail.com&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;smtpPort&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">587</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;smtpUsername&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;my-nanobot@gmail.com&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;smtpPassword&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;your-app-password&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;fromAddress&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;my-nanobot@gmail.com&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;allowFrom&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;your-real-email@gmail.com&quot;</span><span class="hljs-punctuation">]</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<p><strong>3. Run</strong></p>
+<pre><code class="language-bash">nanobot gateway
+</code></pre>
+</details>
+<h2 id="-agent-social-network">🌐 Agent Social Network</h2>
+<p>🐈 nanobot is capable of linking to the agent social network (agent community). <strong>Just send one message and your nanobot joins automatically!</strong></p>
+<table>
+<thead>
+<tr>
+<th>Platform</th>
+<th>How to Join (send this message to your bot)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.moltbook.com/"><strong>Moltbook</strong></a></td>
+<td><code>Read https://moltbook.com/skill.md and follow the instructions to join Moltbook</code></td>
+</tr>
+<tr>
+<td><a href="https://clawdchat.ai/"><strong>ClawdChat</strong></a></td>
+<td><code>Read https://clawdchat.ai/skill.md and follow the instructions to join ClawdChat</code></td>
+</tr>
+</tbody>
+</table>
+<p>Simply send the command above to your nanobot (via CLI or any chat channel), and it will handle the rest.</p>
+<h2 id="️-configuration">⚙️ Configuration</h2>
+<p>Config file: <code>~/.nanobot/config.json</code></p>
+<h3 id="providers">Providers</h3>
+<div class="markdown-alert markdown-alert-tip"><p class="markdown-alert-title"><svg class="octicon octicon-light-bulb mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863 0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM6 15.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"></path></svg>Tip</p><p></p>
+<ul>
+<li><strong>Groq</strong> provides free voice transcription via Whisper. If configured, Telegram voice messages will be automatically transcribed.</li>
+<li><strong>Zhipu Coding Plan</strong>: If you're on Zhipu's coding plan, set <code>&quot;apiBase&quot;: &quot;https://open.bigmodel.cn/api/coding/paas/v4&quot;</code> in your zhipu provider config.</li>
+<li><strong>MiniMax (Mainland China)</strong>: If your API key is from MiniMax's mainland China platform (<a href="http://minimaxi.com">minimaxi.com</a>), set <code>&quot;apiBase&quot;: &quot;https://api.minimaxi.com/v1&quot;</code> in your minimax provider config.</li>
+<li><strong>VolcEngine Coding Plan</strong>: If you're on VolcEngine's coding plan, set <code>&quot;apiBase&quot;: &quot;https://ark.cn-beijing.volces.com/api/coding/v3&quot;</code> in your volcengine provider config.</li>
+</ul>
+</div>
+<table>
+<thead>
+<tr>
+<th>Provider</th>
+<th>Purpose</th>
+<th>Get API Key</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>custom</code></td>
+<td>Any OpenAI-compatible endpoint (direct, no LiteLLM)</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>openrouter</code></td>
+<td>LLM (recommended, access to all models)</td>
+<td><a href="https://openrouter.ai">openrouter.ai</a></td>
+</tr>
+<tr>
+<td><code>anthropic</code></td>
+<td>LLM (Claude direct)</td>
+<td><a href="https://console.anthropic.com">console.anthropic.com</a></td>
+</tr>
+<tr>
+<td><code>openai</code></td>
+<td>LLM (GPT direct)</td>
+<td><a href="https://platform.openai.com">platform.openai.com</a></td>
+</tr>
+<tr>
+<td><code>deepseek</code></td>
+<td>LLM (DeepSeek direct)</td>
+<td><a href="https://platform.deepseek.com">platform.deepseek.com</a></td>
+</tr>
+<tr>
+<td><code>groq</code></td>
+<td>LLM + <strong>Voice transcription</strong> (Whisper)</td>
+<td><a href="https://console.groq.com">console.groq.com</a></td>
+</tr>
+<tr>
+<td><code>gemini</code></td>
+<td>LLM (Gemini direct)</td>
+<td><a href="https://aistudio.google.com">aistudio.google.com</a></td>
+</tr>
+<tr>
+<td><code>minimax</code></td>
+<td>LLM (MiniMax direct)</td>
+<td><a href="https://platform.minimaxi.com">platform.minimaxi.com</a></td>
+</tr>
+<tr>
+<td><code>aihubmix</code></td>
+<td>LLM (API gateway, access to all models)</td>
+<td><a href="https://aihubmix.com">aihubmix.com</a></td>
+</tr>
+<tr>
+<td><code>siliconflow</code></td>
+<td>LLM (SiliconFlow/硅基流动)</td>
+<td><a href="https://siliconflow.cn">siliconflow.cn</a></td>
+</tr>
+<tr>
+<td><code>volcengine</code></td>
+<td>LLM (VolcEngine/火山引擎)</td>
+<td><a href="https://www.volcengine.com">volcengine.com</a></td>
+</tr>
+<tr>
+<td><code>dashscope</code></td>
+<td>LLM (Qwen)</td>
+<td><a href="https://dashscope.console.aliyun.com">dashscope.console.aliyun.com</a></td>
+</tr>
+<tr>
+<td><code>moonshot</code></td>
+<td>LLM (Moonshot/Kimi)</td>
+<td><a href="https://platform.moonshot.cn">platform.moonshot.cn</a></td>
+</tr>
+<tr>
+<td><code>zhipu</code></td>
+<td>LLM (Zhipu GLM)</td>
+<td><a href="https://open.bigmodel.cn">open.bigmodel.cn</a></td>
+</tr>
+<tr>
+<td><code>vllm</code></td>
+<td>LLM (local, any OpenAI-compatible server)</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>openai_codex</code></td>
+<td>LLM (Codex, OAuth)</td>
+<td><code>nanobot provider login openai-codex</code></td>
+</tr>
+<tr>
+<td><code>github_copilot</code></td>
+<td>LLM (GitHub Copilot, OAuth)</td>
+<td><code>nanobot provider login github-copilot</code></td>
+</tr>
+</tbody>
+</table>
+<details>
+<summary><b>OpenAI Codex (OAuth)</b></summary>
+<p>Codex uses OAuth instead of API keys. Requires a ChatGPT Plus or Pro account.</p>
+<p><strong>1. Login:</strong></p>
+<pre><code class="language-bash">nanobot provider login openai-codex
+</code></pre>
+<p><strong>2. Set model</strong> (merge into <code>~/.nanobot/config.json</code>):</p>
+<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;agents&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;defaults&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;model&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;openai-codex/gpt-5.1-codex&quot;</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<p><strong>3. Chat:</strong></p>
+<pre><code class="language-bash">nanobot agent -m <span class="hljs-string">&quot;Hello!&quot;</span>
+</code></pre>
+<blockquote>
+<p>Docker users: use <code>docker run -it</code> for interactive OAuth login.</p>
+</blockquote>
+</details>
+<details>
+<summary><b>Custom Provider (Any OpenAI-compatible API)</b></summary>
+<p>Connects directly to any OpenAI-compatible endpoint — LM Studio, llama.cpp, Together AI, Fireworks, Azure OpenAI, or any self-hosted server. Bypasses LiteLLM; model name is passed as-is.</p>
+<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;providers&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;custom&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;apiKey&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;your-api-key&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;apiBase&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;https://api.your-provider.com/v1&quot;</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;agents&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;defaults&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;model&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;your-model-name&quot;</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<blockquote>
+<p>For local servers that don't require a key, set <code>apiKey</code> to any non-empty string (e.g. <code>&quot;no-key&quot;</code>).</p>
+</blockquote>
+</details>
+<details>
+<summary><b>vLLM (local / OpenAI-compatible)</b></summary>
+<p>Run your own model with vLLM or any OpenAI-compatible server, then add to config:</p>
+<p><strong>1. Start the server</strong> (example):</p>
+<pre><code class="language-bash">vllm serve meta-llama/Llama-3.1-8B-Instruct --port 8000
+</code></pre>
+<p><strong>2. Add to config</strong> (partial — merge into <code>~/.nanobot/config.json</code>):</p>
+<p><em>Provider (key can be any non-empty string for local):</em></p>
+<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;providers&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;vllm&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;apiKey&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;dummy&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;apiBase&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;http://localhost:8000/v1&quot;</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<p><em>Model:</em></p>
+<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;agents&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;defaults&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;model&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;meta-llama/Llama-3.1-8B-Instruct&quot;</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+</details>
+<details>
+<summary><b>Adding a New Provider (Developer Guide)</b></summary>
+<p>nanobot uses a <strong>Provider Registry</strong> (<code>nanobot/providers/registry.py</code>) as the single source of truth.
+Adding a new provider only takes <strong>2 steps</strong> — no if-elif chains to touch.</p>
+<p><strong>Step 1.</strong> Add a <code>ProviderSpec</code> entry to <code>PROVIDERS</code> in <code>nanobot/providers/registry.py</code>:</p>
+<pre><code class="language-python">ProviderSpec(
+    name=<span class="hljs-string">&quot;myprovider&quot;</span>,                   <span class="hljs-comment"># config field name</span>
+    keywords=(<span class="hljs-string">&quot;myprovider&quot;</span>, <span class="hljs-string">&quot;mymodel&quot;</span>),  <span class="hljs-comment"># model-name keywords for auto-matching</span>
+    env_key=<span class="hljs-string">&quot;MYPROVIDER_API_KEY&quot;</span>,        <span class="hljs-comment"># env var for LiteLLM</span>
+    display_name=<span class="hljs-string">&quot;My Provider&quot;</span>,          <span class="hljs-comment"># shown in `nanobot status`</span>
+    litellm_prefix=<span class="hljs-string">&quot;myprovider&quot;</span>,         <span class="hljs-comment"># auto-prefix: model → myprovider/model</span>
+    skip_prefixes=(<span class="hljs-string">&quot;myprovider/&quot;</span>,),      <span class="hljs-comment"># don&#x27;t double-prefix</span>
+)
+</code></pre>
+<p><strong>Step 2.</strong> Add a field to <code>ProvidersConfig</code> in <code>nanobot/config/schema.py</code>:</p>
+<pre><code class="language-python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">ProvidersConfig</span>(<span class="hljs-title class_ inherited__">BaseModel</span>):
+    ...
+    myprovider: ProviderConfig = ProviderConfig()
+</code></pre>
+<p>That's it! Environment variables, model prefixing, config matching, and <code>nanobot status</code> display will all work automatically.</p>
+<p><strong>Common <code>ProviderSpec</code> options:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>litellm_prefix</code></td>
+<td>Auto-prefix model names for LiteLLM</td>
+<td><code>&quot;dashscope&quot;</code> → <code>dashscope/qwen-max</code></td>
+</tr>
+<tr>
+<td><code>skip_prefixes</code></td>
+<td>Don't prefix if model already starts with these</td>
+<td><code>(&quot;dashscope/&quot;, &quot;openrouter/&quot;)</code></td>
+</tr>
+<tr>
+<td><code>env_extras</code></td>
+<td>Additional env vars to set</td>
+<td><code>((&quot;ZHIPUAI_API_KEY&quot;, &quot;{api_key}&quot;),)</code></td>
+</tr>
+<tr>
+<td><code>model_overrides</code></td>
+<td>Per-model parameter overrides</td>
+<td><code>((&quot;kimi-k2.5&quot;, {&quot;temperature&quot;: 1.0}),)</code></td>
+</tr>
+<tr>
+<td><code>is_gateway</code></td>
+<td>Can route any model (like OpenRouter)</td>
+<td><code>True</code></td>
+</tr>
+<tr>
+<td><code>detect_by_key_prefix</code></td>
+<td>Detect gateway by API key prefix</td>
+<td><code>&quot;sk-or-&quot;</code></td>
+</tr>
+<tr>
+<td><code>detect_by_base_keyword</code></td>
+<td>Detect gateway by API base URL</td>
+<td><code>&quot;openrouter&quot;</code></td>
+</tr>
+<tr>
+<td><code>strip_model_prefix</code></td>
+<td>Strip existing prefix before re-prefixing</td>
+<td><code>True</code> (for AiHubMix)</td>
+</tr>
+</tbody>
+</table>
+</details>
+<h3 id="mcp-model-context-protocol">MCP (Model Context Protocol)</h3>
+<div class="markdown-alert markdown-alert-tip"><p class="markdown-alert-title"><svg class="octicon octicon-light-bulb mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863 0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM6 15.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"></path></svg>Tip</p><p>The config format is compatible with Claude Desktop / Cursor. You can copy MCP server configs directly from any MCP server's README.</p>
+</div>
+<p>nanobot supports <a href="https://modelcontextprotocol.io/">MCP</a> — connect external tool servers and use them as native agent tools.</p>
+<p>Add MCP servers to your <code>config.json</code>:</p>
+<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;tools&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;mcpServers&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;filesystem&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">&quot;command&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;npx&quot;</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">&quot;args&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;-y&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;@modelcontextprotocol/server-filesystem&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;/path/to/dir&quot;</span><span class="hljs-punctuation">]</span>
+      <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;my-remote-mcp&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">&quot;url&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;https://example.com/mcp/&quot;</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">&quot;headers&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+          <span class="hljs-attr">&quot;Authorization&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Bearer xxxxx&quot;</span>
+        <span class="hljs-punctuation">}</span>
+      <span class="hljs-punctuation">}</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<p>Two transport modes are supported:</p>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Config</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Stdio</strong></td>
+<td><code>command</code> + <code>args</code></td>
+<td>Local process via <code>npx</code> / <code>uvx</code></td>
+</tr>
+<tr>
+<td><strong>HTTP</strong></td>
+<td><code>url</code> + <code>headers</code> (optional)</td>
+<td>Remote endpoint (<code>https://mcp.example.com/sse</code>)</td>
+</tr>
+</tbody>
+</table>
+<p>Use <code>toolTimeout</code> to override the default 30s per-call timeout for slow servers:</p>
+<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;tools&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;mcpServers&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;my-slow-server&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">&quot;url&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;https://example.com/mcp/&quot;</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">&quot;toolTimeout&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">120</span>
+      <span class="hljs-punctuation">}</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<p>MCP tools are automatically discovered and registered on startup. The LLM can use them alongside built-in tools — no extra configuration needed.</p>
+<h3 id="security">Security</h3>
+<div class="markdown-alert markdown-alert-tip"><p class="markdown-alert-title"><svg class="octicon octicon-light-bulb mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863 0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM6 15.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"></path></svg>Tip</p><p>For production deployments, set <code>&quot;restrictToWorkspace&quot;: true</code> in your config to sandbox the agent.
+<strong>Change in source / post-<code>v0.1.4.post3</code>:</strong> In <code>v0.1.4.post3</code> and earlier, an empty <code>allowFrom</code> means &quot;allow all senders&quot;. In newer versions (including building from source), <strong>empty <code>allowFrom</code> denies all access by default</strong>. To allow all senders, set <code>&quot;allowFrom&quot;: [&quot;*&quot;]</code>.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>tools.restrictToWorkspace</code></td>
+<td><code>false</code></td>
+<td>When <code>true</code>, restricts <strong>all</strong> agent tools (shell, file read/write/edit, list) to the workspace directory. Prevents path traversal and out-of-scope access.</td>
+</tr>
+<tr>
+<td><code>tools.exec.pathAppend</code></td>
+<td><code>&quot;&quot;</code></td>
+<td>Extra directories to append to <code>PATH</code> when running shell commands (e.g. <code>/usr/sbin</code> for <code>ufw</code>).</td>
+</tr>
+<tr>
+<td><code>channels.*.allowFrom</code></td>
+<td><code>[]</code> (allow all)</td>
+<td>Whitelist of user IDs. Empty = allow everyone; non-empty = only listed users can interact.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="cli-reference">CLI Reference</h2>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>nanobot onboard</code></td>
+<td>Initialize config &amp; workspace</td>
+</tr>
+<tr>
+<td><code>nanobot agent -m &quot;...&quot;</code></td>
+<td>Chat with the agent</td>
+</tr>
+<tr>
+<td><code>nanobot agent</code></td>
+<td>Interactive chat mode</td>
+</tr>
+<tr>
+<td><code>nanobot agent --no-markdown</code></td>
+<td>Show plain-text replies</td>
+</tr>
+<tr>
+<td><code>nanobot agent --logs</code></td>
+<td>Show runtime logs during chat</td>
+</tr>
+<tr>
+<td><code>nanobot gateway</code></td>
+<td>Start the gateway</td>
+</tr>
+<tr>
+<td><code>nanobot status</code></td>
+<td>Show status</td>
+</tr>
+<tr>
+<td><code>nanobot provider login openai-codex</code></td>
+<td>OAuth login for providers</td>
+</tr>
+<tr>
+<td><code>nanobot channels login</code></td>
+<td>Link WhatsApp (scan QR)</td>
+</tr>
+<tr>
+<td><code>nanobot channels status</code></td>
+<td>Show channel status</td>
+</tr>
+</tbody>
+</table>
+<p>Interactive mode exits: <code>exit</code>, <code>quit</code>, <code>/exit</code>, <code>/quit</code>, <code>:q</code>, or <code>Ctrl+D</code>.</p>
+<details>
+<summary><b>Scheduled Tasks (Cron)</b></summary>
+<pre><code class="language-bash"><span class="hljs-comment"># Add a job</span>
+nanobot cron add --name <span class="hljs-string">&quot;daily&quot;</span> --message <span class="hljs-string">&quot;Good morning!&quot;</span> --cron <span class="hljs-string">&quot;0 9 * * *&quot;</span>
+nanobot cron add --name <span class="hljs-string">&quot;hourly&quot;</span> --message <span class="hljs-string">&quot;Check status&quot;</span> --every 3600
+
+<span class="hljs-comment"># List jobs</span>
+nanobot cron list
+
+<span class="hljs-comment"># Remove a job</span>
+nanobot cron remove &lt;job_id&gt;
+</code></pre>
+</details>
+<details>
+<summary><b>Heartbeat (Periodic Tasks)</b></summary>
+<p>The gateway wakes up every 30 minutes and checks <code>HEARTBEAT.md</code> in your workspace (<code>~/.nanobot/workspace/HEARTBEAT.md</code>). If the file has tasks, the agent executes them and delivers results to your most recently active chat channel.</p>
+<p><strong>Setup:</strong> edit <code>~/.nanobot/workspace/HEARTBEAT.md</code> (created automatically by <code>nanobot onboard</code>):</p>
+<pre><code class="language-markdown"><span class="hljs-section">## Periodic Tasks</span>
+
+<span class="hljs-bullet">-</span> [ ] Check weather forecast and send a summary
+<span class="hljs-bullet">-</span> [ ] Scan inbox for urgent emails
+</code></pre>
+<p>The agent can also manage this file itself — ask it to &quot;add a periodic task&quot; and it will update <code>HEARTBEAT.md</code> for you.</p>
+<blockquote>
+<p><strong>Note:</strong> The gateway must be running (<code>nanobot gateway</code>) and you must have chatted with the bot at least once so it knows which channel to deliver to.</p>
+</blockquote>
+</details>
+<h2 id="-docker">🐳 Docker</h2>
+<div class="markdown-alert markdown-alert-tip"><p class="markdown-alert-title"><svg class="octicon octicon-light-bulb mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863 0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM6 15.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"></path></svg>Tip</p><p>The <code>-v ~/.nanobot:/root/.nanobot</code> flag mounts your local config directory into the container, so your config and workspace persist across container restarts.</p>
+</div>
+<h3 id="docker-compose">Docker Compose</h3>
+<pre><code class="language-bash">docker compose run --<span class="hljs-built_in">rm</span> nanobot-cli onboard   <span class="hljs-comment"># first-time setup</span>
+vim ~/.nanobot/config.json                     <span class="hljs-comment"># add API keys</span>
+docker compose up -d nanobot-gateway           <span class="hljs-comment"># start gateway</span>
+</code></pre>
+<pre><code class="language-bash">docker compose run --<span class="hljs-built_in">rm</span> nanobot-cli agent -m <span class="hljs-string">&quot;Hello!&quot;</span>   <span class="hljs-comment"># run CLI</span>
+docker compose logs -f nanobot-gateway                   <span class="hljs-comment"># view logs</span>
+docker compose down                                      <span class="hljs-comment"># stop</span>
+</code></pre>
+<h3 id="docker">Docker</h3>
+<pre><code class="language-bash"><span class="hljs-comment"># Build the image</span>
+docker build -t nanobot .
+
+<span class="hljs-comment"># Initialize config (first time only)</span>
+docker run -v ~/.nanobot:/root/.nanobot --<span class="hljs-built_in">rm</span> nanobot onboard
+
+<span class="hljs-comment"># Edit config on host to add API keys</span>
+vim ~/.nanobot/config.json
+
+<span class="hljs-comment"># Run gateway (connects to enabled channels, e.g. Telegram/Discord/Mochat)</span>
+docker run -v ~/.nanobot:/root/.nanobot -p 18790:18790 nanobot gateway
+
+<span class="hljs-comment"># Or run a single command</span>
+docker run -v ~/.nanobot:/root/.nanobot --<span class="hljs-built_in">rm</span> nanobot agent -m <span class="hljs-string">&quot;Hello!&quot;</span>
+docker run -v ~/.nanobot:/root/.nanobot --<span class="hljs-built_in">rm</span> nanobot status
+</code></pre>
+<h2 id="-linux-service">🐧 Linux Service</h2>
+<p>Run the gateway as a systemd user service so it starts automatically and restarts on failure.</p>
+<p><strong>1. Find the nanobot binary path:</strong></p>
+<pre><code class="language-bash"><span class="hljs-built_in">which</span> nanobot   <span class="hljs-comment"># e.g. /home/user/.local/bin/nanobot</span>
+</code></pre>
+<p><strong>2. Create the service file</strong> at <code>~/.config/systemd/user/nanobot-gateway.service</code> (replace <code>ExecStart</code> path if needed):</p>
+<pre><code class="language-ini"><span class="hljs-section">[Unit]</span>
+<span class="hljs-attr">Description</span>=Nanobot Gateway
+<span class="hljs-attr">After</span>=network.target
+
+<span class="hljs-section">[Service]</span>
+<span class="hljs-attr">Type</span>=simple
+<span class="hljs-attr">ExecStart</span>=%h/.local/bin/nanobot gateway
+<span class="hljs-attr">Restart</span>=always
+<span class="hljs-attr">RestartSec</span>=<span class="hljs-number">10</span>
+<span class="hljs-attr">NoNewPrivileges</span>=<span class="hljs-literal">yes</span>
+<span class="hljs-attr">ProtectSystem</span>=strict
+<span class="hljs-attr">ReadWritePaths</span>=%h
+
+<span class="hljs-section">[Install]</span>
+<span class="hljs-attr">WantedBy</span>=default.target
+</code></pre>
+<p><strong>3. Enable and start:</strong></p>
+<pre><code class="language-bash">systemctl --user daemon-reload
+systemctl --user <span class="hljs-built_in">enable</span> --now nanobot-gateway
+</code></pre>
+<p><strong>Common operations:</strong></p>
+<pre><code class="language-bash">systemctl --user status nanobot-gateway        <span class="hljs-comment"># check status</span>
+systemctl --user restart nanobot-gateway       <span class="hljs-comment"># restart after config changes</span>
+journalctl --user -u nanobot-gateway -f        <span class="hljs-comment"># follow logs</span>
+</code></pre>
+<p>If you edit the <code>.service</code> file itself, run <code>systemctl --user daemon-reload</code> before restarting.</p>
+<blockquote>
+<p><strong>Note:</strong> User services only run while you are logged in. To keep the gateway running after logout, enable lingering:</p>
+<pre><code class="language-bash">loginctl enable-linger <span class="hljs-variable">$USER</span>
+</code></pre>
+</blockquote>
+<h2 id="-project-structure">📁 Project Structure</h2>
+<pre><code>nanobot/
+├── agent/          # 🧠 Core agent logic
+│   ├── loop.py     #    Agent loop (LLM ↔ tool execution)
+│   ├── context.py  #    Prompt builder
+│   ├── memory.py   #    Persistent memory
+│   ├── skills.py   #    Skills loader
+│   ├── subagent.py #    Background task execution
+│   └── tools/      #    Built-in tools (incl. spawn)
+├── skills/         # 🎯 Bundled skills (github, weather, tmux...)
+├── channels/       # 📱 Chat channel integrations
+├── bus/            # 🚌 Message routing
+├── cron/           # ⏰ Scheduled tasks
+├── heartbeat/      # 💓 Proactive wake-up
+├── providers/      # 🤖 LLM providers (OpenRouter, etc.)
+├── session/        # 💬 Conversation sessions
+├── config/         # ⚙️ Configuration
+└── cli/            # 🖥️ Commands
+</code></pre>
+<h2 id="-contribute--roadmap">🤝 Contribute &amp; Roadmap</h2>
+<p>PRs welcome! The codebase is intentionally small and readable. 🤗</p>
+<p><strong>Roadmap</strong> — Pick an item and <a href="https://github.com/HKUDS/nanobot/pulls">open a PR</a>!</p>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> <strong>Multi-modal</strong> — See and hear (images, voice, video)</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> <strong>Long-term memory</strong> — Never forget important context</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> <strong>Better reasoning</strong> — Multi-step planning and reflection</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> <strong>More integrations</strong> — Calendar and more</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> <strong>Self-improvement</strong> — Learn from feedback and mistakes</li>
+</ul>
+<h3 id="contributors">Contributors</h3>
+<a href="https://github.com/HKUDS/nanobot/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=HKUDS/nanobot&max=100&columns=12&updated=20260210" alt="Contributors" />
+</a>
+<h2 id="-star-history">⭐ Star History</h2>
+<div align="center">
+  <a href="https://star-history.com/#HKUDS/nanobot&Date">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=HKUDS/nanobot&type=Date&theme=dark" />
+      <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=HKUDS/nanobot&type=Date" />
+      <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=HKUDS/nanobot&type=Date" style="border-radius: 15px; box-shadow: 0 0 30px rgba(0, 217, 255, 0.3);" />
+    </picture>
+  </a>
+</div>
+<p align="center">
+  <em> Thanks for visiting ✨ nanobot!</em><br><br>
+  <img src="https://visitor-badge.laobi.icu/badge?page_id=HKUDS.nanobot&style=for-the-badge&color=00d4ff" alt="Views">
+</p>
+<p align="center">
+  <sub>nanobot is for educational, research, and technical exchange purposes only</sub>
+</p>
+
+            <script async src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+            
+        </body>
+        </html>

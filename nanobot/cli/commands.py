@@ -1,52 +1,73 @@
-"""CLI commands for nanobot."""
+"""CLI commands for nanobot.
 
-import asyncio
+整体架构类比 Go 的 cobra CLI 框架：
+- typer.Typer()  ≈ Go cobra.Command{} — 定义命令和子命令
+- asyncio       ≈ Go goroutine + channel — 并发模型
+- MessageBus    ≈ Go channel — 协程间消息传递
+- @app.command() ≈ Go cmd.AddCommand() — 注册子命令
+"""
+
+import asyncio          # ≈ Go 的 goroutine 运行时，提供事件循环和协程调度
 import os
-import select
-import signal
+import select           # ≈ Go 的 select{}，多路 IO 复用
+import signal           # ≈ Go 的 os/signal 包，处理系统信号(如 Ctrl+C)
 import sys
-from pathlib import Path
+from pathlib import Path  # ≈ Go 的 path/filepath 包
 
-import typer
-from prompt_toolkit import PromptSession
+import typer              # ≈ Go 的 cobra 库，CLI 命令框架
+from prompt_toolkit import PromptSession       # ≈ Go 的 liner/readline 库，交互式输入
 from prompt_toolkit.formatted_text import HTML
-from prompt_toolkit.history import FileHistory
-from prompt_toolkit.patch_stdout import patch_stdout
-from rich.console import Console
-from rich.markdown import Markdown
-from rich.table import Table
+from prompt_toolkit.history import FileHistory  # 命令历史持久化，类似 shell 的 .bash_history
+from prompt_toolkit.patch_stdout import patch_stdout  # 防止异步输出和用户输入互相干扰
+from rich.console import Console    # ≈ Go 的 color/lipgloss 库，终端美化输出
+from rich.markdown import Markdown  # 将 Markdown 渲染到终端
+from rich.table import Table        # 终端中画表格
 from rich.text import Text
 
 from nanobot import __logo__, __version__
 from nanobot.config.schema import Config
 from nanobot.utils.helpers import sync_workspace_templates
 
+# ============================================================================
+# 应用初始化 —— 类比 Go: var rootCmd = &cobra.Command{Use: "nanobot"}
+# ============================================================================
 app = typer.Typer(
     name="nanobot",
     help=f"{__logo__} nanobot - Personal AI Assistant",
-    no_args_is_help=True,
+    no_args_is_help=True,  # 无参数时显示帮助，≈ cobra 的 RunE 返回 help
 )
 
-console = Console()
-EXIT_COMMANDS = {"exit", "quit", "/exit", "/quit", ":q"}
+console = Console()  # 全局终端输出器，≈ Go 中全局的 fmt/log writer
+EXIT_COMMANDS = {"exit", "quit", "/exit", "/quit", ":q"}  # 退出指令集合，≈ Go map[string]bool
 
 # ---------------------------------------------------------------------------
-# CLI input: prompt_toolkit for editing, paste, history, and display
+# CLI 输入处理——类比 Go 里用 liner 库做交互式 readline
+# _PROMPT_SESSION 是全局单例，≈ Go 中的 var liner *liner.State
+# _SAVED_TERM_ATTRS 保存终端原始配置，类似 Go 中 defer term.Restore(fd, oldState)
 # ---------------------------------------------------------------------------
 
-_PROMPT_SESSION: PromptSession | None = None
-_SAVED_TERM_ATTRS = None  # original termios settings, restored on exit
+_PROMPT_SESSION: PromptSession | None = None  # 全局的交互式输入会话单例
+_SAVED_TERM_ATTRS = None  # 终端原始配置快照，程序退出时恢复
 
 
 def _flush_pending_tty_input() -> None:
-    """Drop unread keypresses typed while the model was generating output."""
+    """清空终端输入缓冲区中残留的按键。
+
+    类比 Go：在 agent 生成回复期间用户可能误按了键盘，
+    就像 Go 中读完 channel 后需要 drain 掉多余的消息：
+        for len(ch) > 0 { <-ch }
+
+    优先用 termios.tcflush（系统级清空），
+    降级方案用 select 非阻塞轮询读取丢弃。
+    """
     try:
-        fd = sys.stdin.fileno()
-        if not os.isatty(fd):
+        fd = sys.stdin.fileno()  # 获取标准输入的文件描述符，≈ Go os.Stdin.Fd()
+        if not os.isatty(fd):   # 不是真实终端则跳过(如管道输入)
             return
     except Exception:
         return
 
+    # 方案一：用 termios 系统调用直接刷掉输入缓冲区（最快）
     try:
         import termios
         termios.tcflush(fd, termios.TCIFLUSH)
@@ -54,19 +75,28 @@ def _flush_pending_tty_input() -> None:
     except Exception:
         pass
 
+    # 方案二：select 非阻塞轮询，≈ Go 的 select + default 非阻塞读取
     try:
         while True:
-            ready, _, _ = select.select([fd], [], [], 0)
+            ready, _, _ = select.select([fd], [], [], 0)  # timeout=0 非阻塞
             if not ready:
                 break
-            if not os.read(fd, 4096):
+            if not os.read(fd, 4096):  # 读取并丢弃
                 break
     except Exception:
         return
 
 
 def _restore_terminal() -> None:
-    """Restore terminal to its original state (echo, line buffering, etc.)."""
+    """恢复终端到程序启动前的原始状态。
+
+    类比 Go：
+        oldState, _ := term.MakeRaw(fd)
+        defer term.Restore(fd, oldState)  // <-- 就是这个 defer
+
+    prompt_toolkit 会修改终端模式(关闭回显等)，退出时必须恢复，
+    否则终端会变得不可用(看不到输入的字符)。
+    """
     if _SAVED_TERM_ATTRS is None:
         return
     try:
@@ -77,28 +107,43 @@ def _restore_terminal() -> None:
 
 
 def _init_prompt_session() -> None:
-    """Create the prompt_toolkit session with persistent file history."""
+    """初始化交互式输入会话（带历史记录持久化）。
+
+    类比 Go：
+        line := liner.NewLiner()
+        line.SetCtrlCAborts(true)
+        f, _ := os.Open("~/.nanobot/history/cli_history")
+        line.ReadHistory(f)
+
+    这个函数只在交互模式启动时调用一次，创建全局单例。
+    """
     global _PROMPT_SESSION, _SAVED_TERM_ATTRS
 
-    # Save terminal state so we can restore it on exit
+    # 保存终端原始状态快照，退出时用 _restore_terminal() 恢复
+    # ≈ Go: oldState, _ = term.GetState(fd)
     try:
         import termios
         _SAVED_TERM_ATTRS = termios.tcgetattr(sys.stdin.fileno())
     except Exception:
         pass
 
+    # 命令历史持久化到文件，下次启动可用 ↑↓ 翻阅
     history_file = Path.home() / ".nanobot" / "history" / "cli_history"
     history_file.parent.mkdir(parents=True, exist_ok=True)
 
     _PROMPT_SESSION = PromptSession(
-        history=FileHistory(str(history_file)),
+        history=FileHistory(str(history_file)),  # ≈ Go liner.ReadHistory()
         enable_open_in_editor=False,
-        multiline=False,   # Enter submits (single line mode)
+        multiline=False,   # 按 Enter 立即提交，不等多行
     )
 
 
 def _print_agent_response(response: str, render_markdown: bool) -> None:
-    """Render assistant response with consistent terminal styling."""
+    """格式化打印 agent 的回复到终端。
+
+    类比 Go：fmt.Printf("\n🤖 nanobot\n%s\n", glamour.Render(content))
+    render_markdown=True 时将 Markdown 渲染为彩色终端输出（标题、代码块等）。
+    """
     content = response or ""
     body = Markdown(content) if render_markdown else Text(content)
     console.print()
@@ -113,35 +158,45 @@ def _is_exit_command(command: str) -> bool:
 
 
 async def _read_interactive_input_async() -> str:
-    """Read user input using prompt_toolkit (handles paste, history, display).
+    """异步读取用户输入（支持粘贴、历史翻阅）。
 
-    prompt_toolkit natively handles:
-    - Multiline paste (bracketed paste mode)
-    - History navigation (up/down arrows)
-    - Clean display (no ghost characters or artifacts)
+    类比 Go：
+        text, err := liner.Prompt("You: ")
+        // 但这里是 async 版本，不会阻塞事件循环
+
+    patch_stdout() 确保 agent 的异步输出不会破坏用户正在编辑的输入行，
+    类似 Go 中用 mutex 保护终端输出不和输入冲突。
+
+    prompt_async 是 prompt_toolkit 的异步版本，
+    ≈ Go 中把 liner.Prompt 放在单独的 goroutine 里用 channel 返回结果。
     """
     if _PROMPT_SESSION is None:
         raise RuntimeError("Call _init_prompt_session() first")
     try:
-        with patch_stdout():
+        with patch_stdout():  # 保护输入行不被异步输出打乱
             return await _PROMPT_SESSION.prompt_async(
-                HTML("<b fg='ansiblue'>You:</b> "),
+                HTML("<b fg='ansiblue'>You:</b> "),  # 蓝色加粗提示符
             )
-    except EOFError as exc:
+    except EOFError as exc:  # Ctrl+D 触发 EOF
         raise KeyboardInterrupt from exc
 
 
 
+# 版本回调 —— 类比 Go cobra 中的 PersistentPreRun
+# 当用户执行 nanobot --version 时就会触发这个回调，打印版本后直接退出
 def version_callback(value: bool):
     if value:
         console.print(f"{__logo__} nanobot v{__version__}")
-        raise typer.Exit()
+        raise typer.Exit()  # ≈ Go 的 os.Exit(0)
 
 
+# @app.callback() ≈ Go cobra 的 rootCmd.PersistentPreRun
+# 这是所有子命令执行前的全局钩子
 @app.callback()
 def main(
     version: bool = typer.Option(
         None, "--version", "-v", callback=version_callback, is_eager=True
+        # is_eager=True 表示优先解析这个参数，不等其他参数
     ),
 ):
     """nanobot - Personal AI Assistant."""
@@ -153,9 +208,20 @@ def main(
 # ============================================================================
 
 
-@app.command()
+@app.command()  # 注册为子命令：nanobot onboard
 def onboard():
-    """Initialize nanobot configuration and workspace."""
+    """初始化配置和工作空间。
+
+    类比 Go：
+        var initCmd = &cobra.Command{Use: "init", RunE: func(cmd, args) { ... }}
+
+    工作流程：
+    1. 检查配置文件 ~/.nanobot/config.json 是否存在
+       - 存在：询问用户是覆盖还是刷新(保留已有值)
+       - 不存在：创建默认配置
+    2. 创建工作空间目录
+    3. 同步模板文件到工作空间
+    """
     from nanobot.config.loader import get_config_path, load_config, save_config
     from nanobot.config.schema import Config
     from nanobot.utils.helpers import get_workspace_path
@@ -199,7 +265,25 @@ def onboard():
 
 
 def _make_provider(config: Config):
-    """Create the appropriate LLM provider from config."""
+    """工厂函数：根据配置创建合适的 LLM 提供者实例。
+
+    类比 Go 的接口 + 工厂模式：
+        type Provider interface {
+            Complete(ctx, messages) (string, error)
+        }
+        func NewProvider(config Config) Provider {
+            switch config.ProviderName {
+            case "openai_codex": return &CodexProvider{}
+            case "custom":      return &CustomProvider{}
+            default:            return &LiteLLMProvider{}
+            }
+        }
+
+    支持三种提供者：
+    1. OpenAI Codex（OAuth 认证）
+    2. Custom（自部署的 OpenAI 兼容服务，跳过 LiteLLM）
+    3. LiteLLM（通用代理，支持多家模型如 OpenRouter/Anthropic/Google 等）
+    """
     from nanobot.providers.custom_provider import CustomProvider
     from nanobot.providers.litellm_provider import LiteLLMProvider
     from nanobot.providers.openai_codex_provider import OpenAICodexProvider
@@ -237,7 +321,13 @@ def _make_provider(config: Config):
 
 
 # ============================================================================
-# Gateway / Server
+# Gateway / Server —— 网关服务，类比 Go 中的 http.ListenAndServe 启动服务
+# 这是 nanobot 的“常驻服务模式”，同时运行：
+#   - Agent 循环（处理消息）
+#   - 多个渠道（Telegram/WhatsApp/Slack 等）
+#   - 定时任务（Cron）
+#   - 心跳服务（Heartbeat）
+# 类比 Go 的 errgroup.Group 并发启动多个服务
 # ============================================================================
 
 
@@ -246,7 +336,18 @@ def gateway(
     port: int = typer.Option(18790, "--port", "-p", help="Gateway port"),
     verbose: bool = typer.Option(False, "--verbose", "-v", help="Verbose output"),
 ):
-    """Start the nanobot gateway."""
+    """启动 nanobot 网关服务（常驻模式）。
+
+    类比 Go：
+        func main() {
+            g, ctx := errgroup.WithContext(context.Background())
+            g.Go(func() { agent.Run(ctx) })       // Agent 主循环
+            g.Go(func() { channels.StartAll(ctx) }) // 所有渠道
+            g.Go(func() { cron.Start(ctx) })        // 定时任务
+            g.Go(func() { heartbeat.Start(ctx) })   // 心跳
+            g.Wait()
+        }
+    """
     from nanobot.agent.loop import AgentLoop
     from nanobot.bus.queue import MessageBus
     from nanobot.channels.manager import ChannelManager
@@ -264,15 +365,25 @@ def gateway(
 
     config = load_config()
     sync_workspace_templates(config.workspace_path)
-    bus = MessageBus()
-    provider = _make_provider(config)
-    session_manager = SessionManager(config.workspace_path)
 
-    # Create cron service first (callback set after agent creation)
+    # 消息总线 —— 整个系统的“神经中枢”
+    # 类比 Go 的双向 channel：
+    #   inbound  chan Message  // 用户消息进入
+    #   outbound chan Message  // agent 回复发出
+    # 所有渠道(Telegram/WhatsApp等)往 bus 发消息，Agent 从 bus 取消息处理
+    bus = MessageBus()
+    provider = _make_provider(config)  # LLM 提供者（调用 AI 模型）
+    session_manager = SessionManager(config.workspace_path)  # 会话管理，保存对话历史
+
+    # 定时任务服务 —— 类比 Go 的 robfig/cron
     cron_store_path = get_data_dir() / "cron" / "jobs.json"
     cron = CronService(cron_store_path)
 
-    # Create agent with cron service
+    # 创建 Agent 主循环 —— 这是“大脑”，接收消息、调用 LLM、执行工具
+    # 类比 Go：
+    #   agent := NewAgentLoop(AgentConfig{
+    #       Bus: bus, Provider: provider, Model: "gpt-4o", ...
+    #   })
     agent = AgentLoop(
         bus=bus,
         provider=provider,
@@ -293,9 +404,10 @@ def gateway(
         channels_config=config.channels,
     )
 
-    # Set cron callback (needs agent)
+    # 设置定时任务回调 —— 当定时任务触发时，通过 agent 执行
+    # 类比 Go 的回调模式：cron.AddFunc("*/5 * * * *", func() { agent.Process(msg) })
     async def on_cron_job(job: CronJob) -> str | None:
-        """Execute a cron job through the agent."""
+        """定时任务触发时的回调函数，用 agent 执行任务指令。"""
         from nanobot.agent.tools.message import MessageTool
         reminder_note = (
             "[Scheduled Task] Timer finished.\n\n"
@@ -310,10 +422,14 @@ def gateway(
             chat_id=job.payload.to or "direct",
         )
 
+        # 检查 agent 是否已经通过 message 工具主动发送了消息
+        # 如果是，就不重复发送了（避免重复回复）
         message_tool = agent.tools.get("message")
         if isinstance(message_tool, MessageTool) and message_tool._sent_in_turn:
             return response
 
+        # 如果任务配置了“投递”，将结果通过消息总线发送到指定渠道/用户
+        # 类比 Go：outbound <- Message{Channel: "telegram", ChatID: "12345", Content: resp}
         if job.payload.deliver and job.payload.to and response:
             from nanobot.bus.events import OutboundMessage
             await bus.publish_outbound(OutboundMessage(
@@ -322,13 +438,21 @@ def gateway(
                 content=response
             ))
         return response
-    cron.on_job = on_cron_job
+    cron.on_job = on_cron_job  # 注册回调，类比 Go 中 cron.SetCallback(onCronJob)
 
-    # Create channel manager
+    # 渠道管理器 —— 统一管理所有通信渠道的启动/停止
+    # 类比 Go 中的多个 goroutine 分别监听不同服务：
+    #   go telegramBot.Listen(ctx)
+    #   go whatsappBridge.Listen(ctx)
     channels = ChannelManager(config, bus)
 
     def _pick_heartbeat_target() -> tuple[str, str]:
-        """Pick a routable channel/chat target for heartbeat-triggered messages."""
+        """为心跳消息选择一个可达的渠道/聊天目标。
+
+        类比 Go：从活跃会话列表中找到第一个可用的外部渠道，
+        像从 map[string]Session 中遍历找到第一个 enabled 的 channel。
+        找不到就回退到 "cli:direct"。
+        """
         enabled = set(channels.enabled_channels)
         # Prefer the most recently updated non-internal session on an enabled channel.
         for item in session_manager.list_sessions():
@@ -343,9 +467,11 @@ def gateway(
         # Fallback keeps prior behavior but remains explicit.
         return "cli", "direct"
 
-    # Create heartbeat service
+    # 创建心跳服务 —— 定期检查系统状态，类比 Go 的 health check ticker
+    #   ticker := time.NewTicker(5 * time.Minute)
+    #   go func() { for range ticker.C { checkHealth() } }()
     async def on_heartbeat_execute(tasks: str) -> str:
-        """Phase 2: execute heartbeat tasks through the full agent loop."""
+        """心跳触发时：通过 agent 执行检查任务。"""
         channel, chat_id = _pick_heartbeat_target()
 
         async def _silent(*_args, **_kwargs):
@@ -360,7 +486,7 @@ def gateway(
         )
 
     async def on_heartbeat_notify(response: str) -> None:
-        """Deliver a heartbeat response to the user's channel."""
+        """心跳结果投递到用户的渠道（如果有外部渠道可用的话）。"""
         from nanobot.bus.events import OutboundMessage
         channel, chat_id = _pick_heartbeat_target()
         if channel == "cli":
@@ -389,30 +515,37 @@ def gateway(
 
     console.print(f"[green]✓[/green] Heartbeat: every {hb_cfg.interval_s}s")
 
+    # 启动所有服务 —— asyncio.gather ≈ Go errgroup.Go
+    # 同时启动 Agent、所有渠道、Cron、Heartbeat，等待全部完成
     async def run():
         try:
-            await cron.start()
-            await heartbeat.start()
-            await asyncio.gather(
-                agent.run(),
-                channels.start_all(),
+            await cron.start()       # 启动定时任务调度器
+            await heartbeat.start()  # 启动心跳
+            await asyncio.gather(    # ≈ Go errgroup.Wait()
+                agent.run(),         # Agent 主循环：从 bus 取消息 → 调用 LLM → 发回复
+                channels.start_all(),# 所有渠道监听：Telegram bot、WhatsApp webhook 等
             )
         except KeyboardInterrupt:
             console.print("\nShutting down...")
         finally:
-            await agent.close_mcp()
+            # 优雅关闭所有服务，≈ Go 的 defer + context.Cancel()
+            await agent.close_mcp()  # 关闭 MCP 工具服务器连接
             heartbeat.stop()
             cron.stop()
             agent.stop()
             await channels.stop_all()
 
-    asyncio.run(run())
-
-
+    asyncio.run(run())  # ≈ Go 的 func main() { run() }，启动事件循环
 
 
 # ============================================================================
-# Agent Commands
+# Agent 命令 —— 最核心的交互入口
+# 两种模式：
+#   1. 单消息模式：nanobot agent -m "你好"  → 发一条消息，收到回复后退出
+#   2. 交互模式： nanobot agent           → 进入 REPL 循环，持续对话
+# 类比 Go：
+#   单消息 = 直接调用函数并等待返回
+#   交互模式 = for { input := readline(); response := process(input); print(response) }
 # ============================================================================
 
 
@@ -423,7 +556,22 @@ def agent(
     markdown: bool = typer.Option(True, "--markdown/--no-markdown", help="Render assistant output as Markdown"),
     logs: bool = typer.Option(False, "--logs/--no-logs", help="Show nanobot runtime logs during chat"),
 ):
-    """Interact with the agent directly."""
+    """与 Agent 直接对话。
+
+    类比 Go：
+        func agentCmd(message string, sessionID string) {
+            if message != "" {
+                resp := agent.ProcessDirect(message)  // 单消息模式
+                fmt.Println(resp)
+            } else {
+                for {  // 交互模式 REPL
+                    input := readline()
+                    resp := agent.Process(input)
+                    fmt.Println(resp)
+                }
+            }
+        }
+    """
     from loguru import logger
 
     from nanobot.agent.loop import AgentLoop
@@ -431,16 +579,18 @@ def agent(
     from nanobot.config.loader import get_data_dir, load_config
     from nanobot.cron.service import CronService
 
+    # 加载配置 + 创建基础设施
     config = load_config()
     sync_workspace_templates(config.workspace_path)
 
-    bus = MessageBus()
-    provider = _make_provider(config)
+    bus = MessageBus()           # 消息总线，≈ Go chan，交互模式下用来在主循环和 agent 间传消息
+    provider = _make_provider(config)  # LLM 提供者
 
-    # Create cron service for tool usage (no callback needed for CLI unless running)
+    # 定时任务服务（CLI 模式下主要供 agent 的 cron 工具使用）
     cron_store_path = get_data_dir() / "cron" / "jobs.json"
     cron = CronService(cron_store_path)
 
+    # 日志控制：类比 Go 中 log.SetOutput(io.Discard) vs log.SetOutput(os.Stderr)
     if logs:
         logger.enable("nanobot")
     else:
@@ -465,7 +615,9 @@ def agent(
         channels_config=config.channels,
     )
 
-    # Show spinner when logs are off (no output to miss); skip when logs are on
+    # “思考中”动画上下文管理器
+    # ≈ Go 中的 spinner := yacspin.New(cfg); spinner.Start(); defer spinner.Stop()
+    # 开启日志时不显示 spinner，避免和日志输出混杂
     def _thinking_ctx():
         if logs:
             from contextlib import nullcontext
@@ -473,6 +625,8 @@ def agent(
         # Animated spinner is safe to use with prompt_toolkit input handling
         return console.status("[dim]nanobot is thinking...[/dim]", spinner="dots")
 
+    # 进度回调 —— agent 在处理过程中会通过这个回调报告当前正在做什么
+    # 类比 Go：onProgress := func(msg string) { fmt.Printf("  → %s\n", msg) }
     async def _cli_progress(content: str, *, tool_hint: bool = False) -> None:
         ch = agent_loop.channels_config
         if ch and tool_hint and not ch.send_tool_hints:
@@ -482,6 +636,7 @@ def agent(
         console.print(f"  [dim]↳ {content}[/dim]")
 
     if message:
+       #单消息模式：直接调用，无需总线
         # Single message mode — direct call, no bus needed
         async def run_once():
             with _thinking_ctx():
@@ -505,13 +660,13 @@ def agent(
             _restore_terminal()
             console.print("\nGoodbye!")
             os._exit(0)
-
+    #注册中断信号，执行推出函数
         signal.signal(signal.SIGINT, _exit_on_sigint)
 
-        async def run_interactive():
+        async def run_interactive():    # 定义一个异步函数，协程，使用async.run来运行这个函数，或者awit来执行
             bus_task = asyncio.create_task(agent_loop.run())
-            turn_done = asyncio.Event()
-            turn_done.set()
+            turn_done = asyncio.Event() # 类比 Go 中的 channel，用于协程间的同步
+            turn_done.set() # 初始化为已完成状态，避免首次等待阻塞
             turn_response: list[str] = []
 
             async def _consume_outbound():
@@ -519,7 +674,7 @@ def agent(
                     try:
                         msg = await asyncio.wait_for(bus.consume_outbound(), timeout=1.0)
                         if msg.metadata.get("_progress"):
-                            is_tool_hint = msg.metadata.get("_tool_hint", False)
+                            is_tool_hint = msg.metadata.get("_tool_hint", False)        # 检测工具是否命中，是根据msg来判断
                             ch = agent_loop.channels_config
                             if ch and is_tool_hint and not ch.send_tool_hints:
                                 pass
@@ -546,6 +701,7 @@ def agent(
                     try:
                         _flush_pending_tty_input()
                         user_input = await _read_interactive_input_async()
+                        # 首先判断用户是否输出了命令
                         command = user_input.strip()
                         if not command:
                             continue

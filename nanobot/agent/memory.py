@@ -44,6 +44,7 @@ _SAVE_MEMORY_TOOL = [
 
 class MemoryStore:
     """Two-layer memory: MEMORY.md (long-term facts) + HISTORY.md (grep-searchable log)."""
+    # Python 构造函数 __init__，self 表示实例本身，类似 Go 的 receiver
 
     def __init__(self, workspace: Path):
         self.memory_dir = ensure_dir(workspace / "memory")
@@ -52,19 +53,19 @@ class MemoryStore:
 
     def read_long_term(self) -> str:
         if self.memory_file.exists():
-            return self.memory_file.read_text(encoding="utf-8")
+            return self.memory_file.read_text(encoding="utf-8")  # 读取文件内容为字符串
         return ""
 
     def write_long_term(self, content: str) -> None:
-        self.memory_file.write_text(content, encoding="utf-8")
+        self.memory_file.write_text(content, encoding="utf-8")  # 写入字符串到文件
 
     def append_history(self, entry: str) -> None:
         with open(self.history_file, "a", encoding="utf-8") as f:
-            f.write(entry.rstrip() + "\n\n")
+            f.write(entry.rstrip() + "\n\n")  # 追加写入历史日志
 
     def get_memory_context(self) -> str:
         long_term = self.read_long_term()
-        return f"## Long-term Memory\n{long_term}" if long_term else ""
+        return f"## Long-term Memory\n{long_term}" if long_term else ""  # Python 的三元表达式
 
     async def consolidate(
         self,
@@ -79,6 +80,7 @@ class MemoryStore:
 
         Returns True on success (including no-op), False on failure.
         """
+        # Python 的异步函数 async/await，类似 Go 的 goroutine 但有显式 await
         if archive_all:
             old_messages = session.messages
             keep_count = 0
@@ -98,10 +100,12 @@ class MemoryStore:
         for m in old_messages:
             if not m.get("content"):
                 continue
+            # Python 字典 get 方法，字符串拼接，列表 join
             tools = f" [tools: {', '.join(m['tools_used'])}]" if m.get("tools_used") else ""
             lines.append(f"[{m.get('timestamp', '?')[:16]}] {m['role'].upper()}{tools}: {m['content']}")
 
         current_memory = self.read_long_term()
+        # Python 的多行字符串和格式化，chr(10) 是换行符
         prompt = f"""Process this conversation and call the save_memory tool with your consolidation.
 
 ## Current Long-term Memory
@@ -111,6 +115,7 @@ class MemoryStore:
 {chr(10).join(lines)}"""
 
         try:
+            # await 异步调用 LLM，Python 的异常处理 try/except
             response = await provider.chat(
                 messages=[
                     {"role": "system", "content": "You are a memory consolidation agent. Call the save_memory tool with your consolidation of the conversation."},

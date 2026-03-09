@@ -23,6 +23,7 @@ def _resolve_path(
     return resolved
 
 
+# 读文件工具
 class ReadFileTool(Tool):
     """Tool to read file contents."""
 

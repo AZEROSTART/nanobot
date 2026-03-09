@@ -2,7 +2,7 @@
 
 import json
 import shutil
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field  # Python 的数据类，类似 Go 的 struct，但自动生成 __init__、__repr__ 等方法
 from datetime import datetime
 from pathlib import Path
 from typing import Any
@@ -24,6 +24,9 @@ class Session:
     but does NOT modify the messages list or get_history() output.
     """
 
+    # Python 的类型注解，key 是字符串，messages 是字典列表，created_at/updated_at 是时间，metadata 是字典
+    # last_consolidated 用于标记已归档的消息数
+
     key: str  # channel:chat_id
     messages: list[dict[str, Any]] = field(default_factory=list)
     created_at: datetime = field(default_factory=datetime.now)
@@ -33,21 +36,22 @@ class Session:
 
     def add_message(self, role: str, content: str, **kwargs: Any) -> None:
         """Add a message to the session."""
+        # Python 字典的解包，**kwargs 可变参数，类似 Go 的 map[string]interface{}
         msg = {
             "role": role,
             "content": content,
-            "timestamp": datetime.now().isoformat(),
+            "timestamp": datetime.now().isoformat(),  # ISO 格式时间字符串
             **kwargs
         }
-        self.messages.append(msg)
+        self.messages.append(msg)  # 追加到列表，Python 列表类似 Go 的 slice
         self.updated_at = datetime.now()
 
     def get_history(self, max_messages: int = 500) -> list[dict[str, Any]]:
         """Return unconsolidated messages for LLM input, aligned to a user turn."""
-        unconsolidated = self.messages[self.last_consolidated:]
-        sliced = unconsolidated[-max_messages:]
+        unconsolidated = self.messages[self.last_consolidated:]  # Python 切片，取未归档消息
+        sliced = unconsolidated[-max_messages:]  # 只保留最近 max_messages 条
 
-        # Drop leading non-user messages to avoid orphaned tool_result blocks
+        # 丢弃前面的非 user 消息，避免孤立的工具结果块
         for i, m in enumerate(sliced):
             if m.get("role") == "user":
                 sliced = sliced[i:]
@@ -56,6 +60,7 @@ class Session:
         out: list[dict[str, Any]] = []
         for m in sliced:
             entry: dict[str, Any] = {"role": m["role"], "content": m.get("content", "")}
+            # Python 的 for 循环和条件赋值，类似 Go 的 map 赋值
             for k in ("tool_calls", "tool_call_id", "name"):
                 if k in m:
                     entry[k] = m[k]
@@ -64,7 +69,7 @@ class Session:
 
     def clear(self) -> None:
         """Clear all messages and reset session to initial state."""
-        self.messages = []
+        self.messages = []  # 清空消息列表
         self.last_consolidated = 0
         self.updated_at = datetime.now()
 
@@ -76,6 +81,8 @@ class SessionManager:
     Sessions are stored as JSONL files in the sessions directory.
     """
 
+    # Python 构造函数 __init__，self 表示实例本身，类似 Go 的 receiver
+
     def __init__(self, workspace: Path):
         self.workspace = workspace
         self.sessions_dir = ensure_dir(self.workspace / "sessions")
@@ -84,6 +91,7 @@ class SessionManager:
 
     def _get_session_path(self, key: str) -> Path:
         """Get the file path for a session."""
+        # Python 字符串替换和安全文件名处理，f-string 是格式化字符串，类似 Go 的 fmt.Sprintf
         safe_key = safe_filename(key.replace(":", "_"))
         return self.sessions_dir / f"{safe_key}.jsonl"
 
@@ -102,6 +110,7 @@ class SessionManager:
         Returns:
             The session.
         """
+        # Python 字典缓存，类似 Go 的 map
         if key in self._cache:
             return self._cache[key]
 
@@ -163,6 +172,7 @@ class SessionManager:
         """Save a session to disk."""
         path = self._get_session_path(session.key)
 
+        # Python 文件写入，with 语句自动关闭文件，json.dumps 序列化为字符串
         with open(path, "w", encoding="utf-8") as f:
             metadata_line = {
                 "_type": "metadata",
@@ -176,7 +186,7 @@ class SessionManager:
             for msg in session.messages:
                 f.write(json.dumps(msg, ensure_ascii=False) + "\n")
 
-        self._cache[session.key] = session
+        self._cache[session.key] = session  # 更新缓存
 
     def invalidate(self, key: str) -> None:
         """Remove a session from the in-memory cache."""
