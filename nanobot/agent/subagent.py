@@ -1,5 +1,5 @@
 """Subagent manager for background task execution."""
-
+# 子代理：执行的单独的流，和任务，以及prompt
 import asyncio
 import json
 import uuid
@@ -49,7 +49,8 @@ class SubagentManager:
         self.restrict_to_workspace = restrict_to_workspace
         self._running_tasks: dict[str, asyncio.Task[None]] = {}
         self._session_tasks: dict[str, set[str]] = {}  # session_key -> {task_id, ...}
-
+    # 定义一个异步函数，用于在后台启动子代理任务
+    # 需要的协议字段：task名字，labe标签、渠道，聊天id（会话隔离）、session id
     async def spawn(
         self,
         task: str,
@@ -64,6 +65,7 @@ class SubagentManager:
         origin = {"channel": origin_channel, "chat_id": origin_chat_id}
 
         bg_task = asyncio.create_task(
+            # 核心是这个函数，用于在后台执行子代理任务，工具需要额外注入，有一些额外限制：循环轮次等
             self._run_subagent(task_id, task, display_label, origin)
         )
         self._running_tasks[task_id] = bg_task
@@ -186,6 +188,7 @@ class SubagentManager:
         origin: dict[str, str],
         status: str,
     ) -> None:
+        # 这里还要让ai对结果进行总结，生成自然语言的简短总结。还要不提技术细节，因为主agent能明白，他只关心结果
         """Announce the subagent result to the main agent via the message bus."""
         status_text = "completed successfully" if status == "ok" else "failed"
 
