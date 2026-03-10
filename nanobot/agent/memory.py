@@ -1,5 +1,5 @@
 """Memory system for persistent agent memory."""
-
+# 这个文件，主要是实现保存当前的记忆的功能，采用的是将用户和ai的聊天记录发送给ai，让ai进行总结压缩。
 from __future__ import annotations
 
 import json

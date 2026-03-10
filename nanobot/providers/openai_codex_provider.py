@@ -34,9 +34,11 @@ class OpenAICodexProvider(LLMProvider):
         reasoning_effort: str | None = None,
     ) -> LLMResponse:
         model = model or self.default_model
+        # 规划消息
         system_prompt, input_items = _convert_messages(messages)
 
-        token = await asyncio.to_thread(get_codex_token)
+        token = await asyncio.to_thread(get_codex_token)        # 异步运行，函数,鉴权？
+        #上面异步，是为了不堵塞其他的流程，以及用户后续的输入消息
         headers = _build_headers(token.account_id, token.access)
 
         body: dict[str, Any] = {
@@ -134,6 +136,8 @@ def _convert_messages(messages: list[dict[str, Any]]) -> tuple[str, list[dict[st
     system_prompt = ""
     input_items: list[dict[str, Any]] = []
 
+    # 组织消息的过程中，每条消息都有自己的角色，系统消息（user）、用户消息（user）
+    # 、助手消息（ai）和工具消息（tool调用的结果）
     for idx, msg in enumerate(messages):
         role = msg.get("role")
         content = msg.get("content")
